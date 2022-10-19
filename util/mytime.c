@@ -47,23 +47,10 @@ mytime( )
     time( (char *)temp, 0 );	/* Get a bcd version of time of day */
     return temp[ 0 ];		/* And pretend that it fits in one long */
 }
-
-checkbreak( rout )
-int
-    (*rout)();
-{
-    /* No convenient way of doing this from C under MS-DOS.  Sigh. */
-    union REGS
-	reglist;
-
-    reglist.h.ah = 0x0b;		/* Check keyboard status */
-    int86( 0x21, &reglist, &reglist );
-    /* If the keyboard buffer contained CTRL-C, the program MIGHT exit */
-}
 #endif
 
 
-#if UNIX
+#if UNIX || MSDOS
 #include <signal.h>
 static int
     (*_break_rout)();

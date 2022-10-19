@@ -59,8 +59,8 @@
 	*								*
 	\***************************************************************/
 
-#define HPUX	1		/* HP-UX or SysIII or SysV UN*X	*/
-#define MSDOS	0		/* MS-DOS 2.1 or greater	*/
+#define HPUX	0		/* HP-UX or SysIII or SysV UN*X	*/
+#define MSDOS	1		/* MS-DOS 2.1 or greater	*/
 #define BSD	0		/* BSD 4.2 or greater		*/
 #define AMIGA	0		/* Amiga computer		*/
 
