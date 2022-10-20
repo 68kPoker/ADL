@@ -73,8 +73,8 @@
 
 /* Terminal defines */
 #define HPTERM	0		/* HP terminal I/O		*/
-#define ANSI	0		/* ANSI terminal I/O		*/
-#define TERMCAP	1		/* Termcap I/O			*/
+#define ANSI	1		/* ANSI terminal I/O		*/
+#define TERMCAP	0		/* Termcap I/O			*/
 
 /* The following is UNTESTED - do not use it! */
 #define MULTIPLEX 0		/* Allow multiplexing of terminals? */

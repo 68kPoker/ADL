@@ -78,7 +78,7 @@ FILE
 struct exit_place
     exits[ 5 ];
 
-#if MSDOS
+#if 0 /* MSDOS */
 	extern char
 	    *getml();
 #	define calloc( size, num )	getml( (long)(size * num) )

@@ -180,7 +180,7 @@ char
 	if( !yesno() )
 	    return;
     }
-    savefile = open( savename, WB );
+    savefile = open( savename, WB, 0777 );
     if( savefile < 0 ) {
 	sayer( "Error opening file " );
 	sayer( savename );
