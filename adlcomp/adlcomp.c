@@ -36,7 +36,7 @@ char	*S_VAL = "adlsXXXXXX",		/* See below - patched		*/
 #if MSDOS
 char	*S_VAL = "adlsval.tmp",		/* Temporary string file	*/
 	*CODE  = "adlcode.tmp",		/* Temporary code file		*/
-	*tmpdir= "",			/* Default to current dir	*/
+	*tmpdir= ".",			/* Default to current dir	*/
 	*PATH_SEPS = ":/\\",		/* Set of path separators	*/
 	*LAST_SEP = "\\";		/* Final separator		*/
 #endif
@@ -73,8 +73,8 @@ int16	NUM_VARS = 64,			/* Default # of ADL variables	*/
 	filenum,			/* String index of file name	*/
 	numdir;				/* Number of -i dirs specified	*/
 
-int	S_VAL_F,			/* String paging file		*/
-	CODE_F;				/* Code paging file		*/
+int	S_VAL_F = -1,			/* String paging file		*/
+	CODE_F = -1;				/* Code paging file		*/
 
 #if MSDOS
 unsigned
@@ -274,8 +274,8 @@ init()
     mktemp( tmp_s );
     mktemp( tmp_c );
 #endif
-    S_VAL_F = open( tmp_s, WB );
-    CODE_F = open( tmp_c, WB );
+    S_VAL_F = open( tmp_s, WB, 0777 );
+    CODE_F = open( tmp_c, WB, 0777 );
     if( (S_VAL_F < 0) || (CODE_F < 0) )
 	fatal( "Unable to open temporary files.\n" );
 
@@ -293,7 +293,7 @@ init()
     /* Set up the input file */
     if( open_input( inname ) == 0 ) {
 	fprintf( stderr, "Error opening input file %s\n", inname );
-	exit( -1 );
+	breaker();
     }
     filenum = newstr( inname );
 
@@ -311,7 +311,7 @@ init()
 breaker()
 {
     printf( "***BREAK***\n" );
-    close( S_VAL_F );	close( CODE_F );
+    if (S_VAL_F >= 0) close( S_VAL_F );	if (CODE_F >= 0) close( CODE_F );
     unlink( tmp_s );	unlink( tmp_c );
     exit( -1 );
 }
@@ -394,7 +394,7 @@ printmsg()
 getfile()
 {
     char *fsave;
-    char msg[ 80 ], nsave[ 512 ], t_in[ 512 ], *sprintf();
+    char msg[ 80 ], nsave[ 512 ], t_in[ 512 ];
     int16 lsave, numsave, i, found;
 
     lexer();				/* Get a token.			*/
